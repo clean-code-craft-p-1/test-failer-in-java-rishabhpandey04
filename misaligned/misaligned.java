@@ -1,18 +1,33 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Misaligned {
-    static int printColorMap() {
-        String majorColors[] = {"White", "Red", "Black", "Yellow", "Violet"};
-        String minorColors[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
+
+    private static final String majorColors[] = { "White", "Red", "Black", "Yellow", "Violet" };
+    private static final String minorColors[] = { "Blue", "Orange", "Green", "Brown", "Slate" };
+
+    static List<ColorPair> getColorPairs() {
+        List<ColorPair> colorPair = new ArrayList<ColorPair>();
         int i = 0, j = 0;
-        for(i = 0; i < 5; i++) {
-            for(j = 0; j < 5; j++) {
-                System.out.printf("%d | %s | %s\n", i * 5 + j, majorColors[i], minorColors[i]);
+        for (i = 0; i < majorColors.length; i++) {
+            for (j = 0; j < minorColors.length; j++) {
+                colorPair.add(new ColorPair(i * 5 + j, majorColors[i], minorColors[j]));
             }
         }
-        return i * j;
+        return colorPair;
     }
-    public static void main(String[] args) { 
-        int result = printColorMap();
-        assert(result == 25);
+
+    static void printColorMap() {
+        List<ColorPair> colorPair = getColorPairs();
+        for (ColorPair color : colorPair) {
+            System.out.printf("%-2d | %-6s | %s\n", color.getPairNumber(), color.getMajorColor(),
+                    color.getMinorColor());
+        }
+    }
+
+    public static void main(String[] args) {
+        printColorMap();
+        assert (getColorPairs().size() == 25);
         System.out.println("All is well (maybe!)");
     }
 }
